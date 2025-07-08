@@ -11,3 +11,4 @@ langchain_huggingface
 pypdf
 langchain-google-genai
 streamlit
+tenacity
