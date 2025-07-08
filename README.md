@@ -46,11 +46,7 @@
    streamlit run main.py
    ```
 
-## Future Enhancements
 
-- Support for additional document formats (e.g., DOCX, TXT).
-- Integration with other LLMs and embedding models.
-- Enhanced chat features, such as conversation history and context management.
 
 ---
 
