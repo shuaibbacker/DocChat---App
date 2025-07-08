@@ -3,7 +3,6 @@
 import streamlit as st
 from langchain.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-
 class PDFProcessor:
     def __init__(self, file_path: str):
         self.file_path = file_path
