@@ -3,7 +3,6 @@
 import streamlit as st
 from langchain.vectorstores.faiss import FAISS
 from langchain.embeddings import HuggingFaceEmbeddings
-
 class VectorStore:
     def __init__(self, text_chunks):
         self.text_chunks = text_chunks

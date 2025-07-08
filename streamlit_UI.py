@@ -3,11 +3,9 @@
 import os
 import streamlit as st
 from dotenv import load_dotenv
-
 from pdf_upload import PDFProcessor
 from vector_db import VectorStore
 from qa_retrieval import GeminiQABot
-
 
 class StreamlitApp:
     def __init__(self):
