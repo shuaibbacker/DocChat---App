@@ -10,5 +10,5 @@ langchain_core
 
 langchain_huggingface
 pypdf
-
+langchain-google-genai
 streamlit
