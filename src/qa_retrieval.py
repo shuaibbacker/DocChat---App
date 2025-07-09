@@ -5,7 +5,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 
 
 load_dotenv()
-os.environ["GOOGLE_API_KEY"] = os.getenv("GOOGLE_API_KEY")
+os.environ["GEMINI_API_KEY"] = os.getenv("GEMINI_API_KEY")
 
 class GeminiQABot:
     def __init__(self, vector_store):
@@ -13,7 +13,7 @@ class GeminiQABot:
             model="gemini-1.5-flash",
             temperature=0.5,
             max_tokens=2048,
-            google_api_key=os.environ["GOOGLE_API_KEY"]
+            gemini_api_key=os.environ["GEMINI_API_KEY"]
         )
 
         self.qa_chain = RetrievalQA.from_chain_type(
