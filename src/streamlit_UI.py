@@ -1,32 +1,37 @@
 import streamlit as st
-from src.pdf_upload import PDFProcessor
+from src.database import DatabaseLoader
 from src.vector_db import VectorStore
 from src.qa_retrieval import GeminiQABot
 
 class StreamlitApp:
     def __init__(self):
-        st.set_page_config(page_title="Doc_Chat App")
-        st.title("📄 Doc_Chat App")
+        st.set_page_config(page_title="SQL-Chat App")
+        st.title("📄 SQL-Chat App")
 
     def run(self):
-        # Sidebar for PDF upload
+        # Sidebar for DB connection
         with st.sidebar:
-            st.header("Upload PDF")
-            uploaded_file = st.file_uploader("Upload a PDF file", type=["pdf"])
+            st.header("Database Connection")
+            db_host = st.text_input("Host")
+            db_user = st.text_input("User")
+            db_password = st.text_input("Password", type="password")
+            db_name = st.text_input("Database")
 
-            if uploaded_file is not None:
-                with st.spinner("Processing PDF..."):
-                    with open("temp_uploaded.pdf", "wb") as f:
-                        f.write(uploaded_file.getbuffer())
-
-                    processor = PDFProcessor("temp_uploaded.pdf")
-                    text_chunks = processor.load_and_split()
-
-                    vector_handler = VectorStore(text_chunks)
+            if st.button("Connect"):
+                with st.spinner("Processing..."):
+                    db_loader = DatabaseLoader(
+                        host=db_host,
+                        user=db_user,
+                        password=db_password,
+                        database=db_name
+                    )
+                    documents = db_loader.load_documents()
+                    
+                    vector_handler = VectorStore(documents)
                     docsearch = vector_handler.build_faiss_index()
 
                     st.session_state.qa_bot = GeminiQABot(docsearch)
-                    st.success("✅ Document processed.")
+                    st.success("✅ Database processed.")
 
         # Initialize chat history
         if "messages" not in st.session_state:
@@ -54,4 +59,4 @@ class StreamlitApp:
                     # Add assistant response to chat history
                     st.session_state.messages.append({"role": "assistant", "content": response})
             else:
-                st.warning("Please upload a PDF first.")
+                st.warning("Please connect to the database first.")
